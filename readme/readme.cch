@@ -1,0 +1,18 @@
+#include <vector>
+
+class foo : public bar {
+  static const int shift = 2;
+  int x;
+public:
+  foo(int a) 
+    : x(a>>shift) {}
+  
+  int compute(int a, int b) {
+    for (int i = 0; i < 32; i++) {
+      if (a & 0b1) {
+        b++;
+      }
+    }
+    return b * x;
+  }
+};

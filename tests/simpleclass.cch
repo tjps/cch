@@ -1,0 +1,19 @@
+
+class simple {
+public:
+    simple() {
+    }
+
+    ~simple() {
+    }
+
+private:
+
+    int pvt() {
+        return 42;
+    }
+
+protected:
+
+
+};

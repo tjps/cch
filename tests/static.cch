@@ -1,0 +1,14 @@
+
+static int x = 0;
+
+static int foo() {
+    int m = 1;
+    return m * 2;
+}
+
+class bar {
+public:
+    static const int cid = 347;
+    static const map<string, string> m = { { "{", "}" } };
+    static const int fnc = foo();
+};

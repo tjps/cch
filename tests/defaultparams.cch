@@ -1,0 +1,8 @@
+
+
+class foo {
+
+    void call_me(void* anytime, int call_me = 347) {
+        memset(anytime, 0, call_me);
+    }
+};

@@ -1,0 +1,34 @@
+
+# CCH #
+
+CCH is a C++ preprocessor that removes the need to separate class definitions and implementation.  C++ code can be written in a single .cch file and CCH will automatically split it into corresponding .cc and .h files.  Keep build times, header size, and editor window switches to a minimum.
+
+CCH is designed to be hooked into your build system as a step prior to compilation and offers numerous usages to fit any build system.
+
+CCH optionally emits #line directives so all line-number-dependent constructs (e.g. compiler errors, logging systems) are true to the original .cch file.
+
+Try CCH and see what it can do for your C++ codebase today!
+
+## Installation ##
+
+For both Linux and OS X:
+
+    make && sudo make install
+
+Windows compilation is untested as of this commit.
+
+## Example ##
+##### .cch file:
+```c++
+{{README_CCH}}
+```
+
+##### Generated .h:
+```c++
+{{README_H}}
+```
+
+##### Generated .cc:
+```c++
+{{README_CC}}
+```

@@ -1,0 +1,13 @@
+
+class test {
+    int a;
+    int x;
+    
+    test(int b)
+        : a(b), x(0) {
+    }
+
+    inline test()
+        : a(0), x(0) {
+    }
+};
