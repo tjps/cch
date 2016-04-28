@@ -1,0 +1,34 @@
+.TH CCH 1 "April 28th, 2016" ""
+.SH NAME
+cch - Utility for splitting C++ code into declaration and implementation
+.SH SYNOPSIS
+cch [OPTIONS] --input <.cch file> --output <directory>
+.SH DESCRIPTION
+CCH is a code processor that automatically splits C++ methods into declaration and implementation.  Its use case is to enable writing C++ code in a single .cch file and then have the code be split into separate .cc/.h files before compilation.  This avoids the build performance issues of an all-header arrangement, while keeping the simplicity and convenience.
+.SH OPTIONS
+.SS "-i, --input <file>"
+Specify the input .cch file.
+.SS "-o, --output <dir>"
+Specify the output directory.
+.SS "-d, --debug"
+Enable debug output.
+.SS "-l, --lineNumbers"
+Emit #line directives.
+.SS "-x, --nobanner"
+Don't add CCH banner to generated files.
+.SS "-h, --help"
+Show this help menu and exit.
+.SS "-v, --version"
+Show program version and exit.
+.SS "--ccExtension=<ext>"
+Set output extension for implementation file. Defaults to 'cc'
+.SS "--hExtension=<ext>"
+Set output extension for header file. Defaults to 'h'
+.SH "REPORTING BUGS"
+Please report any bugs/issues at https://github.com/tjps/cch/issues
+.SH COPYRIGHT
+Copyright \(co 2016 Thomas Snider.
+.br
+License: MIT (https://github.com/tjps/cch/blob/master/LICENSE)
+.PP
+Free to use and redistribute, with attribution.  NO WARRANTY.

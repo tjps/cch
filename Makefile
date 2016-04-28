@@ -22,6 +22,8 @@ cch: $(BUILD_DIR)/cch
 install:
 	@test -e $(BUILD_DIR)/cch || (echo "ERROR: CCH binary not built"; exit 1)
 	$(INSTALL) -o root $(BUILD_DIR)/cch /usr/bin/cch
+	gzip -c man/cch.1 > $(BUILD_DIR)/cch.1.gz
+	$(INSTALL) -o root $(BUILD_DIR)/cch.1.gz /usr/share/man/man1/cch.1.gz
 
 test:
 	@./tests.sh
