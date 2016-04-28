@@ -1,8 +1,8 @@
 #ifndef __INTERFACES_H__
 #define __INTERFACES_H__
 
-class Token;
-class Location;
+struct Token;
+struct Location;
 class StringView;
 
 class Parser {
