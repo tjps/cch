@@ -5,7 +5,7 @@ CCH is a C++ preprocessor that removes the need to manually separate function de
 
 CCH is designed to be hooked into your build system as a step prior to compilation and offers numerous usages to fit any build system.
 
-CCH optionally emits #line directives so all line-number-dependent constructs (e.g. compiler errors, logging systems) are true to the original .cch file.
+CCH emits #line directives so all line-number-dependent constructs (e.g. compiler errors, logging systems) are true to the original .cch file.
 
 Try CCH and see what it can do for your C++ codebase today!
 

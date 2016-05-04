@@ -4,7 +4,7 @@ echo "Generating README.md"
 
 cp readme/README.md.tmpl README.md
 
-build/cch --nobanner --input readme/readme.cch --output ./
+build/cch --noBanner --noLineNumbers --input readme/readme.cch --output ./
 
 if [ $? -ne 0 ]; then
     echo "ERROR: Failed to parse readme.cch"

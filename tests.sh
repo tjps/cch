@@ -45,7 +45,7 @@ if [ $(tput colors) -ge 8 ]; then
     default="$(tput sgr0)"
 fi
 
-CCH="build/cch --nobanner"
+CCH="build/cch --noBanner --noLineNumbers"
 failure_count=0
 tests="$@"
 

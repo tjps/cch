@@ -10,8 +10,8 @@ using namespace std;
 #include "Parser.h"
 
 void version() {
-    cerr << "CCH (version: " << build_version << ")" << endl <<
-        "https://github.com/tjps/cch" << endl;
+    cerr << "CCH - https://github.com/tjps/cch" << endl <<
+        "Version: " << build_version << "" << endl;
 }
 
 int main(int argc, char** argv) {
@@ -20,31 +20,31 @@ int main(int argc, char** argv) {
     string ccExtension = "cc", hExtension = "h";
     bool debug = false;
     bool includeBanner = true;
-    bool emitLineNumbers = false;
+    bool emitLineNumbers = true;
     bool usage = false;
 
     static struct option long_options[] = {
         {"help", no_argument, 0, 'h'},
         {"debug", no_argument, 0, 'd'},
-        {"lineNumbers", no_argument, 0, 'l'},
-        {"nobanner", no_argument, 0, 'x'},
         {"input", required_argument, 0, 'i'},
         {"output", required_argument, 0, 'o'},
         {"version", no_argument, 0, 'v'},
-        {"ccExtension", required_argument, 0, 1},
-        {"hExtension", required_argument, 0, 2},
+        {"noBanner", no_argument, 0, 1},
+        {"noLineNumbers", no_argument, 0, 2},
+        {"ccExtension", required_argument, 0, 3},
+        {"hExtension", required_argument, 0, 4},
         {0, 0, 0, 0}
     };
 
     int optindex = 0;
-    for (int c = 0; (c = getopt_long(argc, argv, "hdlxi:o:v",
+    for (int c = 0; (c = getopt_long(argc, argv, "hdi:o:v",
                                      long_options, &optindex)) != -1; ) {
         switch (c) {
-        case 1:   ccExtension = optarg; break;
-        case 2:   hExtension = optarg; break;
+        case 1:   includeBanner = false; break;
+        case 2:   emitLineNumbers = false; break;
+        case 3:   ccExtension = optarg; break;
+        case 4:   hExtension = optarg; break;
         case 'd': debug = true; break;
-        case 'l': emitLineNumbers = true; break;
-        case 'x': includeBanner = false; break;
         case 'i': cchFilename = optarg; break;
         case 'o': outputDirectory = optarg; break;
         case 'v': version(); return 1;
@@ -63,19 +63,19 @@ int main(int argc, char** argv) {
         if (usage) {
             version();
         }
-        cerr << "Usage: " << argv[0] << endl;
-        cerr << fixedIndentation(6,
-            "Required:\n"
-            "-i <cch>, --input=<cch>  Input CCH file\n"
-            "-o <dir>, --output=<dir> Output directory\n"
-            "Optional:\n"
-            "-d, --debug              Enable debug output\n"
-            "-l, --lineNumbers        Emit #line directives\n"
-            "-x, --nobanner           Don't add CCH banner to generated files\n"
-            "-h, --help               Show this help menu and exit\n"
-            "-v, --version            Show program version and exit\n"
-            "--ccExtension=<ext>      Set output extension\n"
-            "--hExtension=<ext>       Set output extension \n");
+        cerr << "Usage: " << argv[0] << " [OPTIONS] -i/--input=<file> " <<
+            " -o/--output=<dir>" << endl << endl <<
+            "   Required:\n"
+            "      -i <file>, --input=<file> Input CCH file\n"
+            "      -o <dir>, --output=<dir>  Output directory\n"
+            "   Optional:\n"
+            "      -d, --debug               Enable debug output\n"
+            "      -h, --help                Show this help menu and exit\n"
+            "      -v, --version             Show program version and exit\n"
+            "      --noLineNumbers           Don't emit #line directives\n"
+            "      --noBanner                Don't add CCH banner to generated files\n"
+            "      --ccExtension=<ext>       Set output extension\n"
+            "      --hExtension=<ext>        Set output extension \n";
         return 1;
     }
 
