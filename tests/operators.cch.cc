@@ -1,18 +1,22 @@
 #include "tests/operators.cch.h"
 
 
-	bool OverrideCity::operator==(const OverrideCity& o) const {
-		return false;
-	}
+    bool OverrideCity::operator==(const OverrideCity& o) const {
+        return false;
+    }
 
-	OverrideCity& OverrideCity::operator<<=(size_t i) {
-		return *this;
-	}
+    OverrideCity& OverrideCity::operator<<=(size_t i) {
+        return *this;
+    }
 
-	char OverrideCity::operator[](size_t i) const {
-		return 'x';
-	}
+    char OverrideCity::operator[](size_t i) const {
+        return 'x';
+    }
 
-	void OverrideCity::operator()() {
-		abort();
-	}
+    void OverrideCity::operator()() {
+        abort();
+    }
+
+    OverrideCity::operator bool() const {
+        return false;
+    }

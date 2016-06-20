@@ -15,7 +15,11 @@ For both Linux and OS X:
 
     make && sudo make install
 
-Windows compilation is untested as of this commit.
+For Windows compilation under Cygwin:
+
+    make
+
+then copy the binary to some directory in PATH.
 
 ## Example ##
 ##### .cch file:

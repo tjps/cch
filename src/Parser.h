@@ -17,16 +17,18 @@ public:
 
     void acceptToken(const Token& token) {
         TokenEnum type = token.type;
-        if (token.value == "class"
-            || token.value == "struct"
-            || token.value == "union") {
-            type = CLASS;
-        } else if (token.value == "template") {
-            type = TEMPLATE;
-        } else if (token.value == "using") {
-            type = USING;
-        } else if (token.value == "namespace") {
-            type = NAMESPACE;
+        if (token.type == TOKEN) {
+            if (token.value == "class"
+                || token.value == "struct"
+                || token.value == "union") {
+                type = CLASS;
+            } else if (token.value == "template") {
+                type = TEMPLATE;
+            } else if (token.value == "using") {
+                type = USING;
+            } else if (token.value == "namespace") {
+                type = NAMESPACE;
+            }
         }
         if (type == token.type) {
             mWrapped.acceptToken(token);
@@ -173,7 +175,10 @@ private:
             int i = 0;
             bool keepInHeader = false;
             int identifier = -1;
-            for (; i < mTokens.size() && (mTokens[i].type == TOKEN || mTokens[i].type == WHITESPACE || mTokens[i].type == COMMENT || mTokens[i].type == TEMPLATE); i++) {
+            for (; i < mTokens.size() && (mTokens[i].type == TOKEN ||
+                                          mTokens[i].type == WHITESPACE ||
+                                          mTokens[i].type == COMMENT ||
+                                          mTokens[i].type == TEMPLATE); i++) {
                 if (Keywords.isHeaderOnly(mTokens[i].value)
                     || mTokens[i].type == TEMPLATE) {
                     keepInHeader = true;

@@ -5,12 +5,15 @@ class OverrideCity {
 
 public:
 
-	bool operator==(const OverrideCity& o) const;
+    bool operator==(const OverrideCity& o) const;
 
-	OverrideCity& operator<<=(size_t i);
+    OverrideCity& operator<<=(size_t i);
 
-	char operator[](size_t i) const;
+    char operator[](size_t i) const;
 
-	void operator()();
+    void operator()();
+
+    operator bool() const;
 };
+
 #endif

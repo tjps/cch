@@ -3,19 +3,23 @@ class OverrideCity {
 
 public:
 
-	bool operator==(const OverrideCity& o) const {
-		return false;
-	}
+    bool operator==(const OverrideCity& o) const {
+        return false;
+    }
 
-	OverrideCity& operator<<=(size_t i) {
-		return *this;
-	}
+    OverrideCity& operator<<=(size_t i) {
+        return *this;
+    }
 
-	char operator[](size_t i) const {
-		return 'x';
-	}
+    char operator[](size_t i) const {
+        return 'x';
+    }
 
-	void operator()() {
-		abort();
-	}
+    void operator()() {
+        abort();
+    }
+
+    operator bool() const {
+        return false;
+    }
 };

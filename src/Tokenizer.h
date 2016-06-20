@@ -63,6 +63,8 @@ private:
                         // then the closing ')' will treat the whole 'operator()'
                         // as a normal token.
                     } else {
+                        // Walk until a non-operator character is encountered,
+                        // namely the opening '(' of the parameter list.
                         for (; i < code.size(); i++) {
                             if (code[i] != '=' && code[i] != '!'
                                 && code[i] != '[' && code[i] != ']'
@@ -70,6 +72,7 @@ private:
                                 && code[i] != '+' && code[i] != '-'
                                 && code[i] != '_' && code[i] != '*'
                                 && code[i] != '%'
+                                && !isalpha(code[i]) // Allow for 'operator bool', etc.
                                 && !isspace(code[i])) {
                                 // Trim any trailing whitespace.
                                 for (; i > 0 && isspace(code[i-1]); i--);
@@ -322,6 +325,9 @@ private:
             if (token.size() > 0) {
                 if (type == TOKEN) {
                     assert(!isspace(token[0]));
+                    if (isspace(token[token.size()-1])) {
+                        cerr << "Token: '" << token << "'" << endl;
+                    }
                     assert(!isspace(token[token.size()-1]));
                 }
                 mEmitter->acceptToken(Token(token, type, mStart, mEnd));
