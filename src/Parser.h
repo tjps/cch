@@ -131,6 +131,7 @@ private:
                 for (; i < mTokens.size(); i++) {
                     mCtx->cc() << mTokens[i].value;
                 }
+                mCtx->emitLineDirective(mTokens.back().end.line);
                 mTokens.clear();
             } else {
                 mTokens.flushToStream(mCtx->h());
@@ -220,6 +221,7 @@ private:
                         for (; i < mTokens.size(); i++) {
                             mCtx->cc() << mTokens[i].value;
                         }
+                        mCtx->emitLineDirective(mTokens.back().end.line);
                         mTokens.clear();
                     }
                 }
