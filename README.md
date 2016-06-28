@@ -21,6 +21,8 @@ For Windows compilation under Cygwin:
 
 then copy the binary to some directory in PATH.
 
+For configuring your editor, see [editor bindings](#editor-bindings) below.
+
 ## Example ##
 ##### .cch file:
 ```c++
@@ -78,4 +80,19 @@ public:
     }
     return b * x;
   }
+```
+
+## Editor bindings ##
+
+The following are handy shortcuts to have .cch files handled as C++ code in your favorite editors:
+
+<b>emacs</b> - add the following to your .emacs:
+```lisp
+(setq auto-mode-alist
+    (cons '("\\.cch$" . c++-mode) auto-mode-alist))
+```
+
+<b>vim</b> - add the following to your .vimrc:
+```
+au BufEnter *.cch setf cpp
 ```
