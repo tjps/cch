@@ -1,25 +1,80 @@
 
-class OverrideCity {
+// This test case makes no attempt to be valid C++ code after processing.
+// Rather it tests that all of the 38 operator overloads, as well as
+// type conversion operator overloads, are properly handled.
 
+class OverrideCity {
 public:
 
-    bool operator==(const OverrideCity& o) const {
-        return false;
-    }
+    void operator +(size_t i) {}
+    void operator +=(size_t i) {}
+    void operator ++(size_t i) {}
 
-    OverrideCity& operator<<=(size_t i) {
+    void operator -(size_t i) {}
+    void operator -=(size_t i) {}
+    void operator --(size_t i) {}
+
+    void operator *(size_t i) {}
+    void operator *=(size_t i) {}
+
+    void operator /(size_t i) {}
+    void operator /=(size_t i) {}
+
+    void operator %(size_t i) {}
+    void operator %=(size_t i) {}
+
+    void operator ^(size_t i) {}
+    void operator ^=(size_t i) {}
+
+    void operator &(size_t i) {}
+    void operator &=(size_t i) {}
+    void operator &&(size_t i) {}
+
+    void operator |(size_t i) {}
+    void operator |=(size_t i) {}
+    void operator ||(size_t i) {}
+
+    void operator !(size_t i) {}
+    void operator !=(size_t i) {}
+
+    void operator ~(size_t i) {}
+
+    void operator =(size_t i) {}
+    void operator ==(size_t i) {}
+
+    void operator <(size_t i) {}
+    void operator <=(size_t i) {}
+    void operator <<(size_t i) {}
+    void operator <<=(size_t i) {}
+
+    void operator >(size_t i) {}
+    void operator >=(size_t i) {}
+    void operator >>(size_t i) {}
+    void operator >>=(size_t i) {}
+
+    void operator ,(size_t i) {}
+
+    void operator ->*(size_t i) {}
+    void operator ->(size_t i) {}
+
+
+    void operator (  )(size_t i) {}
+    void operator [ /*foobar*/  ](size_t i) {}
+
+    OverrideCity& operator/ /* awkwardly placed comment */ () {
         return *this;
     }
 
-    char operator[](size_t i) const {
-        return 'x';
-    }
-
-    void operator()() {
-        abort();
-    }
-
+    // Test the type conversion operator.
     operator bool() const {
         return false;
+    }
+    explicit operator int*() const {
+        return nullptr;
+    }
+
+    // Test C++11 user-defined literals.
+    double operator "" _foo(const char* str) {
+        return some_conversion_of_str_to_double(str);
     }
 };

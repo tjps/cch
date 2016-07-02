@@ -69,7 +69,6 @@ private:
 
         // List of remaining C++(11) features to be handled:
         // TODO: handle default params.
-        // TODO: Complete the set of operator** overloads.
         // TODO: Add handling for throw() decorators.
         // TODO: Add handling for alignas().
         // TODO: Add handling for try constructors.

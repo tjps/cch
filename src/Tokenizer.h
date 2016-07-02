@@ -53,36 +53,13 @@ private:
         // This loop consumes the input and pushes tokens onto the token stack.
         for (size_t i = 0; i < code.size(); i++) {
             token.setEnd(i);
+            if (token.get() == "operator") {
+                // This still feels hackish, but I have
+                // yet to find the elegant solution.
+                states.pushState(OPERATOR);
+            }
             switch (states.currentState()) {
             case NORMAL:
-                // TODO: fix this abhorrent hack.
-                if (token.get() == "operator") {
-                    for (; i < code.size() && isspace(code[i]); i++);
-                    if (i < code.size() && code[i] == '(') {
-                        // By doing nothing here, we skip past the opening '(' and
-                        // then the closing ')' will treat the whole 'operator()'
-                        // as a normal token.
-                    } else {
-                        // Walk until a non-operator character is encountered,
-                        // namely the opening '(' of the parameter list.
-                        for (; i < code.size(); i++) {
-                            if (code[i] != '=' && code[i] != '!'
-                                && code[i] != '[' && code[i] != ']'
-                                && code[i] != '<' && code[i] != '>'
-                                && code[i] != '+' && code[i] != '-'
-                                && code[i] != '_' && code[i] != '*'
-                                && code[i] != '%'
-                                && !isalpha(code[i]) // Allow for 'operator bool', etc.
-                                && !isspace(code[i])) {
-                                // Trim any trailing whitespace.
-                                for (; i > 0 && isspace(code[i-1]); i--);
-                                i--; // Backup one so outer loop increment works properly.
-                                break;
-                            }
-                        }
-                    }
-                    break;
-                }
                 switch (code[i]) {
                 case '\'':
                 case '"':
@@ -113,7 +90,6 @@ private:
                 case '[':
                     token.flush();
                     states.pushState(CharMap.getStateForChar(code[i]));
-                    states.currentStateDepth() = 1;
                     break;
                 case '=':
                     token.emitToken("=", ASSIGN);
@@ -240,6 +216,94 @@ private:
                     break;
                 }
                 break;
+            case OPERATOR:
+                if (states.currentStateDepth() == 347) {
+                    token.flush();
+                    states.popState();
+                    i--; // Unconsume this current unrelated character.
+                    break;
+                }
+                switch (code[i]) {
+                case '-': case '+':
+                case '*': case '/':
+                case '%': case '^':
+                case '&': case '|':
+                case '!': case '=':
+                case '<': case '>':
+                    // Handle '->' and '->*' operators.
+                    if (code[i] == '-' && i+1 < code.size() && code[i+1] == '>') {
+                        i++;
+                        if (i+1 < code.size() && code[i+1] == '*') {
+                            i++;
+                        }
+                        // Handle all double operators (e.g. '<<' '&&' ...)
+                    } else if ((code[i] == '<' || code[i] == '>' || code[i] == '+'
+                                || code[i] == '-' || code[i] == '&' || code[i] == '|')
+                               && i+1 < code.size() && code[i+1] == code[i]) {
+                        i++;
+                    }
+                    // Handle the assignment form (e.g. '+=' '>>=' ...)
+                    if (i+1 < code.size() && code[i+1] == '=') {
+                        i++;
+                    }
+                case '~':  // These two operators appear only as solo chars.
+                case ',':
+                    token.setEnd(i+1);
+                    token.flush();
+                    states.popState();
+                    break;
+                case '(':
+                case '[':
+                    // Mark this state to emit next time we get back to it.
+                    states.currentStateDepth() = 347;
+                    // Switch to a group capture, but do not emit.
+                    // This accumulates the group into the current token.
+                    states.pushState(CharMap.getStateForChar(code[i]));
+                    states.currentStateEmit() = false;
+                    break;
+                case ' ':
+                case '\n':
+                case '\r':
+                case '\t':
+                case '\v':
+                case '\f':
+                    if (token.get() == "operator") {
+                        // If this is the first character in the operator
+                        // capture, accumulate all whitespace.
+                        for (; i < code.size() && isspace(code[i]); i++);
+                    } else {
+                        token.flush();
+                        states.popState();
+                    }
+                    i--; // unconsume the last character.
+                    break;
+                case '"':
+                    if (i+1 < code.size() && code[i+1] == '"') {
+                        i += 2;
+                        // Handle the user-defined literal case.
+                        // Capture any whitespace, if present.
+                        for (; i < code.size() && isspace(code[i]); i++);
+                        // Capture any combo of '_' or alphabetic.
+                        for (; i < code.size() && (isalpha(code[i]) || code[i] == '_'); i++);
+                        token.setEnd(i);
+                        i--;
+                    }
+                default:
+                    if (token.get() != "operator") {
+                        // As long as there was at least some whitespace
+                        // after 'operator' consider the type conversion
+                        // operator case.
+                        if (isalpha(code[i]) || code[i] == '_') {
+                            for (; i < code.size() && code[i] != '('; i++);
+                            token.setEnd(i);
+                            i--;
+                        }
+                    }
+                    token.flush();
+                    states.popState();
+                    break;
+                }
+                break;
             case INVALIDSTATE: assert(false && "Should never be in INVALIDSTATE");
             }
         }
@@ -345,7 +409,7 @@ private:
     enum TokenizerState {
         INVALIDSTATE, NORMAL, CPP_COMMENT, C_COMMENT, LITERAL_CAPTURE,
         BRACE_CAPTURE, PARENS_CAPTURE, BRACKET_CAPTURE, ANGLE_CAPTURE,
-        PREPROCESSOR
+        PREPROCESSOR, OPERATOR
     };
 
     class StateStack {
@@ -360,13 +424,13 @@ private:
                 : state(_state),
                   chr(0),
                   chr_set(false),
-                  depth(0),
+                  depth(1),
                   emit(true) {}
             ss()
                 : state(INVALIDSTATE),
                   chr(0),
                   chr_set(false),
-                  depth(0),
+                  depth(1),
                   emit(true) {}
         };
 
