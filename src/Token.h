@@ -4,7 +4,6 @@
 #include <string>
 #include <sstream>
 #include "StringView.h"
-#include "util.h"
 
 enum TokenEnum {
     INVALIDTOKEN, TOKEN, CLASS, ASSIGN, STRING_LITERAL, COMMENT, PREPROC,
@@ -18,6 +17,8 @@ struct Location {
     size_t column; // character column in file.   0-indexed.
     Location() : pos(0), line(1), column(0) {}
 };
+
+static string replaceAll(string str, const string& from, const string& to);
 
 struct Token {
     StringView value;
@@ -59,5 +60,14 @@ struct Token {
         assert(false && "Invalid TokenEnum value");
     }
 };
+
+static string replaceAll(string str, const string& from, const string& to) {
+    size_t pos = 0;
+    while ((pos = str.find(from, pos)) != string::npos) {
+        str.replace(pos, from.length(), to);
+        pos += to.length(); // Handles case where 'to' is a substring of 'from'
+    }
+    return str;
+}
 
 #endif //__TOKEN_H__
