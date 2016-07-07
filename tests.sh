@@ -14,7 +14,7 @@ function cleanup {
     if [ -z "$debug" ]; then
         rm -rf "$tmp"
     else
-        echo "Debug mode. Not cleaning up temp dir: $tmp"
+        echo "Debug mode - not cleaning up temp dir: $tmp"
     fi
 }
 trap cleanup EXIT
@@ -59,7 +59,8 @@ for test_case in $tests; do
     try $CCH --input "$test_case" --output "$tmp"
     if [ $? -eq 0 ]; then
         for ext in .h .cc; do
-            # for resetting the truth: cp  ${tmp}/${test_name}${ext} ${test_case}${ext}
+            # for resetting the truth:
+            ## cp ${tmp}/${test_name}${ext} ${test_case}${ext}
             try diff --ignore-tab-expansion \
                 --ignore-space-change \
                 --ignore-blank-lines \
@@ -72,10 +73,10 @@ for test_case in $tests; do
         done
     fi
     if [ $successful_diff_count -eq 2 ]; then
-        echo -n "[${green}OK${default}]     "
+        printf "[${green}OK${default}]     "
     else
         ((failure_count++))
-        echo -n "[${red}FAILED${default}] "
+        printf "[${red}FAILED${default}] "
     fi
     echo "$test_case"
 done

@@ -3,6 +3,8 @@ CXX ?= g++
 CXX_ARGS = -g -Wall -Wno-sign-compare -Werror -std=c++98 -O2
 BUILD_DIR = build
 BUILD_VER = $(shell git log -n1 --pretty=format:%H)
+REPO_URL = "https://github.com/tjps/cch"
+
 
 all: cch
 
@@ -13,7 +15,8 @@ $(BUILD_DIR)/cch: src/* | $(BUILD_DIR)/
 ifneq ($(BUILD_VER), $(shell cat $(BUILD_DIR)/version 2>/dev/null))
 	@echo "Generating $(BUILD_DIR)/version.h"
 	@printf "%s" $(BUILD_VER) > $(BUILD_DIR)/version
-	@printf "static const char* build_version = \"%s\";\n" $(BUILD_VER) > $(BUILD_DIR)/version.h
+	@printf "static const char* kBuildVersion = \"%s\";\n" $(BUILD_VER) > $(BUILD_DIR)/version.h
+	@printf "static const char* kRepoUrl = \"%s\";\n" $(REPO_URL) >> $(BUILD_DIR)/version.h
 endif
 	$(CXX) $(CXX_ARGS) -Isrc/ -I$(BUILD_DIR)/ -o $(BUILD_DIR)/cch src/main.cc
 

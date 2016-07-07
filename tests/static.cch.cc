@@ -1,11 +1,11 @@
 #include "tests/static.cch.h"
 
- int x = 0;
+/* static */ int x = 0;
 
- int foo() {
+/* static */ int foo() {
     int m = 1;
     return m * 2;
 }
-     const int bar::cid = 347;
-     const map<string, string> bar::m = { { "{", "}" } };
-     const int bar::fnc = foo();
+    /* static */ const int bar::cid = 347;
+    /* static */ const map<string, string> bar::m = { { "{", "}" } };
+    /* static */ const int bar::fnc = foo();

@@ -58,6 +58,9 @@ struct Token {
         case NAMESPACE: return "NAMESPACE";
         };
         assert(false && "Invalid TokenEnum value");
+        // Keep older versions of g++ happy that fail to deduce
+        // that assert(false) implies the function doesn't return.
+        return "";
     }
 };
 

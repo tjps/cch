@@ -4,12 +4,19 @@
 #include "StringView.h"
 
 static struct {
+    // Returns true if the following function must remain
+    // entirely in the header.
     bool isHeaderOnly(const StringView& keyword) {
-        return keyword == "inline" || keyword == "__force_inline";
+        return keyword == "inline"
+            || keyword == "__force_inline";
     }
 
+    // Returns true if the keyword cannot exist in the
+    // definition of a function/object.
     bool isStrippedFromDefinition(const StringView& keyword) {
-        return keyword == "virtual" || keyword == "explicit" || keyword == "static";
+        return keyword == "virtual"
+            || keyword == "explicit"
+            || keyword == "static";
     }
 } Keywords;
 

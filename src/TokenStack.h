@@ -10,6 +10,9 @@
 class TokenStack : public vector<Token> {
 public:
     ~TokenStack() {
+        // If the stack is not empty on destruction
+        // it means there are lost tokens that
+        // have not been flushed to a stream.
         assert(empty());
     }
 
@@ -34,11 +37,12 @@ public:
     }
 
     string toString() const {
-        string ret;
+        string ret = "TokenStack [";
         for (int i = 0; i < size(); i++) {
-            ret += (*this)[i].toString() + " >> ";
+            if (i > 0) { ret += " >> "; }
+            ret += (*this)[i].toString();
         }
-        return ret;
+        return ret + "]";
     }
 };
 

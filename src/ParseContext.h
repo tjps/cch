@@ -8,10 +8,11 @@
 #include <assert.h>
 
 // Holds various pieces of context about the parse.
+//
 // Most importantly holds the accumulated .cc and .h outputs,
 // but also tracks current class scope, whether or not
-// the current scope is templated<>, and emits #line directives
-// if needed.
+// the current scope is templated<>, and emits
+// #line directives if needed.
 //
 class ParseContext {
     struct ScopeEntry {
@@ -37,7 +38,9 @@ public:
           ccfile(ccOutputStream),
           hfile(hOutputStream) {
         string guard = "__" + cchFile + "__";
-        // Replace all non-alphanumeric characters in the include guard with '_'
+        // Replace all non-alphanumeric characters
+        // in the include guard with '_' to make a valid
+        // preprocessor token.
         for (int i = 0; i < guard.size(); i++) {
             if (!isalpha(guard[i]) && !isdigit(guard[i])) {
                 guard[i] = '_';
@@ -61,6 +64,9 @@ public:
         return *hfile;
     }
 
+    // Get the current scope in connected form, with trailing '::'.
+    // e.g. if inside class B inside namespace A, return "A::B::"
+    //   or if at default scope, return ""
     string getScope() const {
         string ret;
         for (int i = 0; i < scope.size(); i++) {
@@ -81,6 +87,11 @@ public:
         scope.pop_back();
     }
 
+    // Returns true if anything in the scope stack
+    // is marked as being templated - all inner classes/scopes
+    // are treated as implicitly templated since we don't do
+    // actual symbol type processing to see if the template
+    // variables are used.
     bool templated() const {
         for (int i = 0; i < scope.size(); i++) {
             if (scope[i].templated) {
@@ -90,10 +101,14 @@ public:
         return false;
     }
 
+    // If emitting #line directives is requested, then
+    // emit a #line directive for the given line number
+    // to both the .cc and the .h buffers.
     void emitLineDirective(int lineno) {
         if (emitLineNumbers) {
             stringstream directive;
-            directive << "\n#line " << lineno << " \"" << cchFile << "\"\n";
+            directive << "\n#line " << lineno <<
+                " \"" << cchFile << "\"\n";
             cc() << directive.str();
             h() << directive.str();
         }

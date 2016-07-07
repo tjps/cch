@@ -13,7 +13,9 @@ class BaseTokenizer : public Tokenizer {
     class TokenTracker;
 
 public:
-    void tokenize(const StringView& code, Parser* emitter, Location start = Location()) {
+    void tokenize(const StringView& code,
+                  Parser* emitter,
+                  Location start = Location()) {
         TokenTracker token(code, emitter, start);
         tokenize(code, token);
         assert(token.getBytesConsumed() == code.size());
@@ -32,7 +34,10 @@ private:
                 case '(': case ')': return PARENS_CAPTURE;
                 case '[': case ']': return BRACKET_CAPTURE;
                 case '<': case '>': return ANGLE_CAPTURE;
-                default: assert(false && "No state for specified character");
+                default: assert(false && "No state for specified char");
+                    // Keep older versions of g++ happy that fail to deduce
+                    // that assert(false) implies the function doesn't return.
+                    return INVALIDSTATE;
                 }
             }
 
@@ -42,7 +47,10 @@ private:
                 case '(': case ')': return PARENS_GROUP;
                 case '[': case ']': return TOKEN;
                 case '<': case '>': return TOKEN;
-                default: assert(false && "No token type for specified character");
+                default: assert(false && "No token type for specified char");
+                    // Keep older versions of g++ happy that fail to deduce
+                    // that assert(false) implies the function doesn't return.
+                    return INVALIDTOKEN;
                 }
             }
         } CharMap;
@@ -53,9 +61,10 @@ private:
         // This loop consumes the input and pushes tokens onto the token stack.
         for (size_t i = 0; i < code.size(); i++) {
             token.setEnd(i);
-            if (token.get() == "operator") {
+            if (states.currentState() == NORMAL
+                && token.get() == "operator") {
                 // This still feels hackish, but I have
-                // yet to find the elegant solution.
+                // yet to find a more elegant solution.
                 states.pushState(OPERATOR);
             }
             switch (states.currentState()) {
@@ -312,9 +321,9 @@ private:
         token.flush();
     }
 
-    // Tracks beginning and end of a subsection of the backing string
-    // with the ability to flush that subsection out as a Token
-    // to the specified emitter.
+    // Tracks beginning and end of a subsection of the
+    // backing string with the ability to flush that
+    // subsection out as a Token to the specified emitter.
     //
     class TokenTracker {
         const StringView mBackingString;
@@ -412,6 +421,12 @@ private:
         PREPROCESSOR, OPERATOR
     };
 
+    // StateStack provides syntactic sugar around a vector
+    // of TokenizerStates.  In addition to more informative
+    // method names, it also tracks extra state data and
+    // enforces a few invariants that then don't need to be
+    // checked in the client code.
+    //
     class StateStack {
 
         struct ss {

@@ -1,7 +1,7 @@
 #include "tests/modifiers.cch.h"
 
-     modified::modified(const string& str) {
+    /* explicit */ modified::modified(const string& str) {
     }
 
-     modified::~modified() {
+    /* virtual */ modified::~modified() {
     }

@@ -64,7 +64,7 @@
     OverrideCity::operator bool() const {
         return false;
     }
-     OverrideCity::operator int*() const {
+    /* explicit */ OverrideCity::operator int*() const {
         return nullptr;
     }
 
