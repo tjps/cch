@@ -9,6 +9,8 @@ CCH emits #line directives so all line-number-dependent constructs (e.g. compile
 
 Try CCH and see what it can do for your C++ codebase today!
 
+[![Build Status](https://travis-ci.org/tjps/cch.svg?branch=master)](https://travis-ci.org/tjps/cch)
+
 ## Installation ##
 
 For both Linux and OS X:
