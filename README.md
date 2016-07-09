@@ -13,11 +13,11 @@ Try CCH and see what it can do for your C++ codebase today!
 
 For both Linux and OS X:
 
-    make && ./tests.sh && sudo make install
+    make && make test && sudo make install
 
 For Windows compilation under Cygwin:
 
-    make && ./tests.sh
+    make && make test
 
 then copy the binary to some directory in PATH.
 
