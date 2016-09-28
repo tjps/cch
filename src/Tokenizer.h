@@ -316,6 +316,18 @@ private:
             case INVALIDSTATE: assert(false && "Should never be in INVALIDSTATE");
             }
         }
+        if (states.currentState() == LITERAL_CAPTURE
+            || states.currentState() == BRACE_CAPTURE
+            || states.currentState() == PARENS_CAPTURE
+            || states.currentState() == BRACKET_CAPTURE
+            || states.currentState() == ANGLE_CAPTURE) {
+            // If we are still in any of the capture modes at the end of
+            // code block, the input is definitely malformed.
+            cout << "Unclosed capture" << endl;
+            // TODO: gracefully exit instead of exit(),
+            //   and print the location of the offending start character.
+            exit(1);
+        }
         // Push the remaining token (if any).
         token.setEnd(code.size());
         token.flush();
