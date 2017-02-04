@@ -70,7 +70,7 @@ public:
 ```c++
 #include "readme/readme.cch.h"
 
-   const int foo::shift = 2;
+  /* static */ const int foo::shift = 2;
   foo::foo(int a) 
     : x(a>>shift) {}
   
@@ -97,4 +97,9 @@ The following are handy shortcuts to have .cch files handled as C++ code in your
 <b>vim</b> - add the following to your .vimrc:
 ```
 au BufEnter *.cch setf cpp
+```
+
+<b>ctags</b> - add .cch to the extension->language mapping when invoking ctags:
+```
+$ ctags ... --langmap="c++:+.cch" ...
 ```
