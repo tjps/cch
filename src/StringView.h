@@ -2,7 +2,7 @@
 #define __STRINGVIEW_H__
 
 #include <string>
-#include <string.h>  // for strlen()
+#include <string.h>  // for strlen, memcmp, memchr
 
 // Provides an immutable view on a span of memory.
 // The standard use case is to access slices
@@ -42,6 +42,14 @@ public:
         return mData[i];
     }
 
+    bool operator==(const StringView& str) const {
+        return mSize == str.mSize
+            && ::memcmp(mData, str.mData, mSize) == 0;
+    }
+    bool operator!=(const StringView& str) const {
+        return !(*this == str);
+    }
+
     bool operator==(const char* str) const {
         size_t i = 0;
         while (*str != '\0'
@@ -52,9 +60,17 @@ public:
         }
         return (*str == '\0' && i == mSize);
     }
-
     bool operator!=(const char* str) const {
         return !(*this == str);
+    }
+
+    bool find(unsigned char c, size_t* offset) const {
+        const void* loc = ::memchr(mData, c, mSize);
+        if (loc == NULL) {
+            return false;
+        }
+        *offset = ((const char*)loc - mData);
+        return true;
     }
 
     string toString() const {

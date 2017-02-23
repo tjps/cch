@@ -10,16 +10,53 @@ using namespace std;
 #include "Tokenizer.h"
 #include "Parser.h"
 
+static bool diff(StringView a, StringView b) {
+    size_t end = 0;
+    while (a.find('\n', &end)) {
+        end += 1; // capture the '\n' too.
+        StringView lineA = a.slice(0, end);
+        StringView lineB = b.slice(0, min(end, b.size()));
+        if (lineA.size() >= 5 && ::memcmp(lineA.data(), "#line", 5) == 0) {
+            if (lineB.size() >= 5 && ::memcmp(lineB.data(), "#line", 5) != 0) {
+                return true;
+            }
+        } else if (lineA != lineB) {
+            return true;
+        }
+        a = a.slice(lineA.size(), a.size());
+        b = b.slice(lineB.size(), b.size());
+    }
+    return a != b;
+}
+
+static bool readFromFile(const string& filename,
+                         string* contents) {
+    ifstream inputFile(filename.c_str(),
+                       ios::in|ios::binary|ios::ate);
+    if (!inputFile.good()) {
+        return false;
+    }
+    contents->resize(inputFile.tellg());
+    inputFile.seekg(0, ios::beg);
+    inputFile.read(&(*contents)[0], contents->size());
+    return true;
+}
 
 static void writeToFile(const string& filename,
-                      const string& banner,
-                      const stringstream& content) {
-    ofstream file(filename.c_str(), ios::binary);
-    if (!banner.empty()) {
-        file << banner << endl;
+                        const string& banner,
+                        const stringstream& content,
+                        bool diffAware) {
+    string newContents = (!banner.empty() ? (banner + "\n") : "") + content.str();
+    string existingContents;
+    if (!diffAware
+        || !readFromFile(filename, &existingContents)
+        || diff(newContents, existingContents)) {
+        ofstream file(filename.c_str(), ios::binary);
+        file << newContents;
+        file.close();
+    } else {
+        cerr << "Contents of " << filename << " unchanged, skipping writing" << endl;
     }
-    file << content.str();
-    file.close();
 }
 
 void version() {
@@ -40,6 +77,7 @@ int main(int argc, char** argv) {
     bool debug = false;
     bool includeBanner = true;
     bool emitLineNumbers = true;
+    bool diffAware = false;
     bool usage = false;
 
     static struct option long_options[] = {
@@ -52,6 +90,7 @@ int main(int argc, char** argv) {
         {"noLineNumbers", no_argument, 0, 2},
         {"ccExtension", required_argument, 0, 3},
         {"hExtension", required_argument, 0, 4},
+        {"diff", no_argument, 0, 5},
         {0, 0, 0, 0}
     };
 
@@ -63,6 +102,7 @@ int main(int argc, char** argv) {
         case 2:   emitLineNumbers = false; break;
         case 3:   ccExtension = optarg; break;
         case 4:   hExtension = optarg; break;
+        case 5:   diffAware = true; break;
         case 'd': debug = true; break;
         case 'i': cchFilename = optarg; break;
         case 'o': outputDirectory = optarg; break;
@@ -98,20 +138,18 @@ int main(int argc, char** argv) {
             "      --noLineNumbers           Don't emit #line directives\n"
             "      --noBanner                Don't add CCH banner to generated files\n"
             "      --ccExtension=<ext>       Set output extension (Default: " << Defaults::ccExtension << ")\n"
-            "      --hExtension=<ext>        Set output extension (Default: " << Defaults::hExtension << "\n";
+            "      --hExtension=<ext>        Set output extension (Default: " << Defaults::hExtension << "\n"
+            "   Experimental:    (**subject to change/removal**)\n"
+            "      --diff                    Enable content-aware diff for not rewriting\n"
+            "                                an output if no source change occurred for it\n";
         return 1;
     }
 
+    // Populate cch with the contents of the .cch file.
     string cch;
-    {   // Populate cch with the contents of the .cch file.
-        ifstream inputFile(cchFilename.c_str(), ios::in|ios::binary|ios::ate);
-        if (!inputFile.good()) {
-            cerr << "ERROR: failed to open input: " << cchFilename << endl;
-            return 2;
-        }
-        cch.resize(inputFile.tellg());
-        inputFile.seekg(0, ios::beg);
-        inputFile.read(&cch[0], cch.size());
+    if (!readFromFile(cchFilename, &cch)) {
+        cerr << "ERROR: failed to open input: " << cchFilename << endl;
+        return 2;
     }
 
     stringstream cc, h;
@@ -145,7 +183,7 @@ int main(int argc, char** argv) {
         banner += ") ";
         banner += kBuildVersion;
     }
-    writeToFile(ccFilename, banner, cc);
-    writeToFile(hFilename, banner, h);
+    writeToFile(ccFilename, banner, cc, diffAware);
+    writeToFile(hFilename, banner, h, diffAware);
     return 0;
 }
