@@ -18,7 +18,7 @@ ifneq ($(BUILD_VER), $(shell cat $(BUILD_DIR)/version 2>/dev/null))
 	@printf "static const char* kBuildVersion = \"%s\";\n" $(BUILD_VER) > $(BUILD_DIR)/version.h
 	@printf "static const char* kRepoUrl = \"%s\";\n" $(REPO_URL) >> $(BUILD_DIR)/version.h
 endif
-	$(CXX) $(CXX_ARGS) -Isrc/ -I$(BUILD_DIR)/ -o $(BUILD_DIR)/cch src/main.cc
+	$(CXX) $(CXX_ARGS) -Isrc/ -I$(BUILD_DIR)/ src/main.cc -o $@
 
 cch: $(BUILD_DIR)/cch
 

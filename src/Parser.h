@@ -165,13 +165,18 @@ private:
             bool templated = false;
             string scopeName;
             for (int i = 0; i+1 < mTokens.size(); i++) {
+                // If we encounter the CLASS or NAMESPACE token,
                 if (mTokens[i].type == CLASS || mTokens[i].type == NAMESPACE) {
-                    for (i++; i < mTokens.size() && mTokens[i].type == WHITESPACE; i++);
+                    // skip past any whitespace/comments to the next token,
+                    for (i++; i < mTokens.size() && (mTokens[i].type == WHITESPACE || mTokens[i].type == COMMENT); i++);
+                    // and capture the token as the scope name.
                     if (i < mTokens.size() && mTokens[i].type == TOKEN) {
                         scopeName = mTokens[i].value.toString();
                     }
                     break;
                 } else if (mTokens[i].type == TEMPLATE) {
+                    // If we encounter a TEMPLATE token on the way, mark
+                    // this whole scope as being templated.
                     templated = true;
                 }
             }

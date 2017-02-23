@@ -10,7 +10,7 @@ debug=""
 
 # Set up temporary directory and a hook to remove it on exit.
 tmp=$(mktemp -d 2>/dev/null || mktemp -d -t cch)
-function cleanup {
+cleanup() {
     if [ -z "$debug" ]; then
         rm -rf "$tmp"
     else
@@ -28,7 +28,7 @@ fi
 # try() runs the full argument list as a command, capturing stdout/stderr.
 # If the command fails (does not return 0) the output is printed along with
 # the command line and the return code.
-function try {
+try() {
     output=$("$@" 2>&1)
     local rc=$?
     if [ $rc -ne 0 ]; then
