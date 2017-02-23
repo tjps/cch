@@ -1,15 +1,25 @@
-.TH CCH 1 "April 28th, 2016" ""
+.TH CCH 1 "Feb 22nd, 2017" ""
 .SH NAME
 cch - Utility for splitting C++ code into declaration and implementation
 .SH SYNOPSIS
-cch [OPTIONS] --input <.cch file> --output <directory>
+cch [OPTIONS] --input <.cch file> [--output <format string>]
+.\"
 .SH DESCRIPTION
 CCH is a code processor that automatically splits C++ methods into declaration and implementation.  Its use case is to enable writing C++ code in a single .cch file and then have the code be split into separate .cc/.h files before compilation.  This avoids the build performance issues of an all-header arrangement, while keeping the simplicity and convenience.
+.\"
 .SH OPTIONS
 .SS "-i, --input <file>"
 Specify the input .cch file.
-.SS "-o, --output <dir>"
-Specify the output directory.
+.SS "-o, --output <format string>"
+Specify the format string for the location of the output files.
+Defaults to '%p', which writes the output files alongside the input file.
+
+Available format specifiers:                          e.g. 'src/util.cch':
+                                                      -------------------
+   %p - full path of the input .cch                   src/util.cch
+   %d - directory portion of the specified .cch       src
+   %f - base name of the .cch, without leading dir    util.cch
+   %% - a literal '%'                                 %
 .SS "-d, --debug"
 Enable debug output.
 .SS "-h, --help"
@@ -24,10 +34,11 @@ Don't add CCH banner to generated files.
 Set output extension for implementation file. Defaults to 'cc'
 .SS "--hExtension=<ext>"
 Set output extension for header file. Defaults to 'h'
+.\"
 .SH "REPORTING BUGS"
 Please report any bugs/issues at https://github.com/tjps/cch/issues
 .SH COPYRIGHT
-Copyright \(co 2016 Thomas Snider.
+Copyright \(co 2017 Thomas Snider.
 .br
 License: MIT (https://github.com/tjps/cch/blob/master/LICENSE)
 .PP

@@ -2,5 +2,6 @@
 *#
 .#*
 core
-dev.sh
+core.*
 build/
+junk/

@@ -1,11 +1,11 @@
 #ifndef __PARSECONTEXT_H__
 #define __PARSECONTEXT_H__
 
+#include <assert.h>
+#include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
-#include <sstream>
-#include <iostream>
-#include <assert.h>
 
 // Holds various pieces of context about the parse.
 //

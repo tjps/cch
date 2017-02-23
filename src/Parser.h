@@ -5,7 +5,7 @@
 #include "TokenStack.h"
 #include "Keywords.h"
 #include "ParseContext.h"
-#include "version.h"
+#include "Version.h"
 
 // Simple parser wrapper that transforms certain keywords
 // into their corresponding token types and passes
@@ -292,7 +292,7 @@ private:
             if (mTokens[i].type != COMMENT && mTokens[i].type != WHITESPACE) {
                 cerr << "ERROR: exiting with unconsumed tokens." <<
                     " Tokens: " << mTokens.toString() << endl <<
-                    "Please open an issue at " << kRepoUrl <<
+                    "Please open an issue at " << Version::kRepoURL <<
                     " including source .cch, if possible." << endl;
                 abort();
             }

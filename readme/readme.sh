@@ -1,10 +1,11 @@
 #!/bin/bash
+# Script for generating the README.md from the template.
 
 echo "Generating README.md"
 
 cp readme/README.md.tmpl README.md
 
-build/cch --noBanner --noLineNumbers --input readme/readme.cch --output ./
+build/cch --noBanner --noLineNumbers --input readme/readme.cch --output ./%f
 
 if [ $? -ne 0 ]; then
     echo "ERROR: Failed to parse readme.cch"

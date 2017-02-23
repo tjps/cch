@@ -3,8 +3,8 @@
 
 #include <vector>
 #include "Interfaces.h"
-#include "Token.h"
 #include "StringView.h"
+#include "Token.h"
 
 // This tokenizer iterates over the input text, splitting it into
 // appropriate instances of Token and sending them to the specified emitter.
@@ -417,12 +417,6 @@ private:
                 }
                 mEmitter->acceptToken(Token(token, type, mStart, mEnd));
                 mBytesConsumed += token.size();
-                if (0) {
-                    cout << "emit(" << Token::typeToString(type) << " " <<
-                        mStart.line << ":" << mStart.column << " -> " <<
-                        mEnd.line << ":" << mEnd.column << "): " <<
-                        replaceAll(token.toString(), "\n", "\\n") << endl;
-                }
             }
         }
     };

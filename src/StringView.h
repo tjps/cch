@@ -1,8 +1,12 @@
 #ifndef __STRINGVIEW_H__
 #define __STRINGVIEW_H__
 
-#include <string>
+#include <assert.h>  // for assert()
+#include <iostream>  // for ostream
 #include <string.h>  // for strlen, memcmp, memchr
+#include <string>
+
+using namespace std;
 
 // Provides an immutable view on a span of memory.
 // The standard use case is to access slices
@@ -79,9 +83,6 @@ public:
 };
 
 // Allow for writing a StringView directly to an ostream.
-ostream& operator<< (ostream& out, const StringView& s) {
-    out.write(s.data(), s.size());
-    return out;
-}
+ostream& operator<< (ostream& out, const StringView& s);
 
 #endif //__STRINGVIEW_H__
