@@ -7,8 +7,15 @@
 
 failure_count=0
 
+# Cross-platform way to find executables under a given directory.
+find_executables() {
+    for i in $1/*; do
+        [ -x "$i" ] && echo "$i"
+    done
+}
+
 echo "Running unit tests"
-for test_binary in $(find build/test/ -type f -executable); do
+for test_binary in $(find_executables build/test); do
     try $test_binary
     if [ $? -eq 0 ]; then
         printf "[${GREEN}OK${DEFAULT}]     "

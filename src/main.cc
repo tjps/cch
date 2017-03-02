@@ -94,7 +94,7 @@ int main(int argc, char** argv) {
             version();
         }
         cerr << "Usage: " << argv[0] << " [OPTIONS] -i/--input=<file> " <<
-            " -o/--output=<dir>" << endl << endl <<
+            " [-o/--output=<format string>]" << endl << endl <<
             "   Required:\n"
             "      -i <file>, --input=<file> Input CCH file\n"
             "   Optional:\n"
