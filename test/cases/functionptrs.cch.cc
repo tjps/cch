@@ -1,4 +1,4 @@
-#include "test/cases/functionptrs.cch.h"
+#include "functionptrs.cch.h"
 
 int (*floor)(double d) = nullptr;
 

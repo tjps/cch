@@ -1,4 +1,4 @@
-#include "test/cases/allinone.cch.h"
+#include "allinone.cch.h"
 
 
 /* WORD WORD ASSIGNMENT WORD */

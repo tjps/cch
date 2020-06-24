@@ -1,5 +1,5 @@
-#ifndef __test_cases_initializers_cch__
-#define __test_cases_initializers_cch__
+#pragma once
+
 
 class test {
     int a;
@@ -12,4 +12,3 @@ class test {
     }
 };
 
-#endif

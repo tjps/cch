@@ -1,4 +1,4 @@
-#include "test/cases/static.cch.h"
+#include "static.cch.h"
 
 /* static */ int x = 0;
 

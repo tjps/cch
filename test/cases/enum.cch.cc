@@ -1,2 +1,2 @@
-#include "test/cases/enum.cch.h"
+#include "enum.cch.h"
 

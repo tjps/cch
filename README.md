@@ -9,6 +9,8 @@ CCH emits #line directives so all line-number-dependent constructs (e.g. compile
 
 Try CCH and see what it can do for your C++ codebase today!
 
+Consider trying [makefile.py](https://github.com/tjps/makefile.py) as well - autogenerate a Makefile for your project.
+
 [![Build Status](https://travis-ci.org/tjps/cch.svg?branch=master)](https://travis-ci.org/tjps/cch)
 
 ## Installation ##
@@ -25,6 +27,7 @@ then copy the binary to some directory in PATH.
 
 For configuring your editor, see [editor bindings](#editor-bindings) below.
 
+
 ## Example ##
 ##### .cch file:
 ```c++
@@ -34,9 +37,9 @@ class foo : public bar {
   static const int shift = 2;
   int x;
 public:
-  foo(int a) 
+  foo(int a)
     : x(a>>shift) {}
-  
+
   int compute(int a, int b) {
     for (int i = 0; i < 32; i++) {
       if (a & 0b1) {
@@ -59,7 +62,7 @@ class foo : public bar {
   int x;
 public:
   foo(int a);
-  
+
   int compute(int a, int b);
 };
 
@@ -71,9 +74,9 @@ public:
 #include "readme/readme.cch.h"
 
   /* static */ const int foo::shift = 2;
-  foo::foo(int a) 
+  foo::foo(int a)
     : x(a>>shift) {}
-  
+
   int foo::compute(int a, int b) {
     for (int i = 0; i < 32; i++) {
       if (a & 0b1) {

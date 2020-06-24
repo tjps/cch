@@ -1,5 +1,5 @@
-#ifndef __test_cases_allinone_cch__
-#define __test_cases_allinone_cch__
+#pragma once
+
 
 
 /* WORD WORD */
@@ -34,4 +34,3 @@ private:
 
 };
 
-#endif

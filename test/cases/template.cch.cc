@@ -1,2 +1,2 @@
-#include "test/cases/template.cch.h"
+#include "template.cch.h"
 

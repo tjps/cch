@@ -1,2 +1,2 @@
-#include "test/cases/preprocessor.cch.h"
+#include "preprocessor.cch.h"
 

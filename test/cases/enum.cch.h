@@ -1,5 +1,5 @@
-#ifndef __test_cases_enum_cch__
-#define __test_cases_enum_cch__
+#pragma once
+
 
 enum outerEnum { a, b, c, d, e };
 
@@ -15,4 +15,3 @@ public:
     };
 };
 
-#endif

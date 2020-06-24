@@ -1,4 +1,4 @@
-#include "test/cases/vars.cch.h"
+#include "vars.cch.h"
 
 int y_0 = 42;
 char str[] = "foobar";

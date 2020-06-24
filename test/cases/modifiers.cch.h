@@ -1,5 +1,5 @@
-#ifndef __test_cases_modifiers_cch__
-#define __test_cases_modifiers_cch__
+#pragma once
+
 
 
 class modified {
@@ -9,4 +9,3 @@ public:
     virtual ~modified();
 };
 
-#endif

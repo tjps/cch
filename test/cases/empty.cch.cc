@@ -1,2 +1,2 @@
-#include "test/cases/empty.cch.h"
+#include "empty.cch.h"
 

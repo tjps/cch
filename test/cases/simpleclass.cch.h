@@ -1,5 +1,5 @@
-#ifndef __test_cases_simpleclass_cch__
-#define __test_cases_simpleclass_cch__
+#pragma once
+
 
 class simple {
 public:
@@ -16,4 +16,3 @@ protected:
 
 };
 
-#endif

@@ -1,5 +1,5 @@
-#ifndef __test_cases_namespace_cch__
-#define __test_cases_namespace_cch__
+#pragma once
+
 
 using namespace std;
 
@@ -17,4 +17,3 @@ namespace /* anonymous */ {
     class no_one_can_hear_me_scream_in_here;
 }
 
-#endif

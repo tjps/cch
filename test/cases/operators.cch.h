@@ -1,5 +1,5 @@
-#ifndef __test_cases_operators_cch__
-#define __test_cases_operators_cch__
+#pragma once
+
 
 // This test case makes no attempt to be valid C++ code after processing.
 // Rather it tests that all of the 38 operator overloads, as well as
@@ -73,4 +73,3 @@ public:
     double operator "" _foo(const char* str);
 };
 
-#endif

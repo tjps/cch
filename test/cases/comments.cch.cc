@@ -1,4 +1,4 @@
-#include "test/cases/comments.cch.h"
+#include "comments.cch.h"
 
 /*
   Easy C-style comment

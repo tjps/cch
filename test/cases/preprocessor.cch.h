@@ -1,5 +1,5 @@
-#ifndef __test_cases_preprocessor_cch__
-#define __test_cases_preprocessor_cch__
+#pragma once
+
 
 #include <stdio.h>
 #include <string>
@@ -15,4 +15,3 @@
     do_something(i);             \
         }
 
-#endif

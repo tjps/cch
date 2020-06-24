@@ -1,4 +1,4 @@
-#include "test/cases/lambda.cch.h"
+#include "lambda.cch.h"
 
 std::function<void()> f =
     []{ int x = 1; };

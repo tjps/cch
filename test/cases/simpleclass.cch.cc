@@ -1,4 +1,4 @@
-#include "test/cases/simpleclass.cch.h"
+#include "simpleclass.cch.h"
 
     simple::simple() {
     }

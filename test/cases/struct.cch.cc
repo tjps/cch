@@ -1,2 +1,2 @@
-#include "test/cases/struct.cch.h"
+#include "struct.cch.h"
 

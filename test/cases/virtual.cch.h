@@ -1,5 +1,5 @@
-#ifndef __test_cases_virtual_cch__
-#define __test_cases_virtual_cch__
+#pragma once
+
 
 class interface {
 public:
@@ -14,5 +14,3 @@ public:
     virtual void doSomething();
     virtual int calcSomething(int x, int y);
 };
-
-#endif

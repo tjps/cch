@@ -1,5 +1,5 @@
-#ifndef __test_cases_struct_cch__
-#define __test_cases_struct_cch__
+#pragma once
+
 
 struct named {
     struct /* unnamed type member */ {
@@ -12,4 +12,3 @@ struct named {
     double d;
 };
 
-#endif

@@ -1,4 +1,4 @@
-#include "test/cases/virtual.cch.h"
+#include "virtual.cch.h"
 
 
     /* virtual */ void impl::doSomething() { /* do nothing */ }

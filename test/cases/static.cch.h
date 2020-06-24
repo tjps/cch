@@ -1,5 +1,5 @@
-#ifndef __test_cases_static_cch__
-#define __test_cases_static_cch__
+#pragma once
+
 
 static int x;
 
@@ -12,4 +12,3 @@ public:
     static const int fnc;
 };
 
-#endif

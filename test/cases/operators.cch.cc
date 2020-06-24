@@ -1,4 +1,4 @@
-#include "test/cases/operators.cch.h"
+#include "operators.cch.h"
 
 
     void OverrideCity::operator +(size_t i) {}

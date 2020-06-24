@@ -37,22 +37,13 @@ public:
           emitLineNumbers(_emitLineNumbers),
           ccfile(ccOutputStream),
           hfile(hOutputStream) {
-        string guard = "__" + cchFile + "__";
-        // Replace all non-alphanumeric characters
-        // in the include guard with '_' to make a valid
-        // preprocessor token.
-        for (int i = 0; i < guard.size(); i++) {
-            if (!isalpha(guard[i]) && !isdigit(guard[i])) {
-                guard[i] = '_';
-            }
-        }
-        cc() << "#include \"" << cchFile << ".h\"" << endl;
-        h() << "#ifndef " << guard << endl <<
-            "#define " << guard << endl;
+
+        cc() << "#include \"" << filename(cchFile) << ".h\"" << endl;
+        h() << "#pragma once" << endl << endl;
     }
 
     ~ParseContext() {
-        h() << endl << "#endif" << endl;
+        h() << endl;
         cc() << endl;
     }
 
@@ -112,6 +103,13 @@ public:
             cc() << directive.str();
             h() << directive.str();
         }
+    }
+
+private:
+    static string filename(const string& path) {
+        size_t end = path.size();
+        for (; 0 < end && path[end-1] != '/'; end--);
+        return path.substr(end);
     }
 };
 

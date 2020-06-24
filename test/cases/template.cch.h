@@ -1,5 +1,5 @@
-#ifndef __test_cases_template_cch__
-#define __test_cases_template_cch__
+#pragma once
+
 
 
 template<class T>
@@ -18,4 +18,3 @@ class c {
 template<typename M = map<string, string> >
 class forward {};
 
-#endif

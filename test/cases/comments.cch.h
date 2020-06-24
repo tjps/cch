@@ -1,5 +1,5 @@
-#ifndef __test_cases_comments_cch__
-#define __test_cases_comments_cch__
+#pragma once
+
 
 /*
   Easy C-style comment
@@ -23,4 +23,3 @@ char* bar;
 /* ending on C-style comment
  */
 
-#endif

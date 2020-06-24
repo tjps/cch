@@ -1,4 +1,4 @@
-#include "test/cases/modifiers.cch.h"
+#include "modifiers.cch.h"
 
     /* explicit */ modified::modified(const string& str) {
     }

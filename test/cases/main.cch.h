@@ -1,6 +1,5 @@
-#ifndef __test_cases_main_cch__
-#define __test_cases_main_cch__
+#pragma once
+
 
 int main(int argc, char** argv);
 
-#endif

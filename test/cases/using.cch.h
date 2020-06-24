@@ -1,8 +1,7 @@
-#ifndef __test_cases_using_cch__
-#define __test_cases_using_cch__
+#pragma once
+
 
 using namespace std;
 
 using vec = std::vector<string>;
 
-#endif

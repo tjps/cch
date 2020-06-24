@@ -1,4 +1,4 @@
-#include "test/cases/initializers.cch.h"
+#include "initializers.cch.h"
 
     
     test::test(int b)

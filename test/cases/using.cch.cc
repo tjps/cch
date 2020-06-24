@@ -1,2 +1,2 @@
-#include "test/cases/using.cch.h"
+#include "using.cch.h"
 
