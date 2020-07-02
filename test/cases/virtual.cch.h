@@ -12,5 +12,5 @@ class impl : public interface {
 public:
 
     virtual void doSomething();
-    virtual int calcSomething(int x, int y);
+    virtual int calcSomething(int x, int y) override;
 };

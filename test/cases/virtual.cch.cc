@@ -2,6 +2,6 @@
 
 
     /* virtual */ void impl::doSomething() { /* do nothing */ }
-    /* virtual */ int impl::calcSomething(int x, int y) {
+    /* virtual */ int impl::calcSomething(int x, int y) /* override */ {
         return x * y;
     }

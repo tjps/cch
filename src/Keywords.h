@@ -16,7 +16,8 @@ static struct {
     bool isStrippedFromDefinition(const StringView& keyword) {
         return keyword == "virtual"
             || keyword == "explicit"
-            || keyword == "static";
+            || keyword == "static"
+            || keyword == "override";
     }
 } Keywords;
 

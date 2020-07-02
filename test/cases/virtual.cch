@@ -10,7 +10,7 @@ class impl : public interface {
 public:
 
     virtual void doSomething() { /* do nothing */ }
-    virtual int calcSomething(int x, int y) {
+    virtual int calcSomething(int x, int y) override {
         return x * y;
     }
 };
